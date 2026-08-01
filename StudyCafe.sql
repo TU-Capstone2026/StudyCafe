@@ -5,3 +5,4 @@ CREATE TABLE seats (
 
     CONSTRAINT UQ_seats_seat_number UNIQUE (seat_number)
 ) DEFAULT CHARSET=utf8mb4;
+
