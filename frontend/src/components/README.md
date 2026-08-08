@@ -1,0 +1,1 @@
+모든 기능별 컴포넌트들은 여기 : frontend/src/components에 작성
