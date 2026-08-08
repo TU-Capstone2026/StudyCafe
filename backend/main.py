@@ -1,4 +1,5 @@
 from show import show_all_seats
+from cancel_seat import cancel_seat
 from Book import Book
 from add_seat import add_seat
 from fastapi import FastAPI
@@ -22,6 +23,15 @@ def get_seats():
         "status": "success",
         "seats": seats
     }
+
+@app.delete("/cancel/{seat_number}/")
+def cancel_seats(seat_number:str):
+    cancel_seat(seat_number)
+    return{
+        "status": "success"
+    }
+
+
 
 def main():
     print("스터디카페 예약 시스템을 시작합니다.")
