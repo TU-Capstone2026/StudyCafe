@@ -9,7 +9,7 @@ def add_seat(seat_number):
         cursor = conn.cursor()
         
         # 좌석 추가 쿼리 (status는 DEFAULT값인 '이용가능'으로 자동 들어감)
-        sql = "INSERT INTO seats (seat_number) VALUES (%s);"
+        sql = "UPDATE seats SET status = 'reserved' WHERE seat_number = %s;"
         cursor.execute(sql, (seat_number,))
         
         # 데이터 변경사항 저장 (COMMIT 필수)
