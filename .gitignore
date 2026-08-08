@@ -221,3 +221,13 @@ __marimo__/
 .DS_Store
 
 db.py
+
+# 프론트엔드 (npm) 관련 제외
+node_modules/
+
+# 백엔드 (Python) 관련 제외
+__pycache__/
+*.pyc
+
+# 보안 관련 (비밀번호, API 키 등이 담긴 파일)
+.env
