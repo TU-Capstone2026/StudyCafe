@@ -227,8 +227,24 @@ __marimo__/
 
 db.py
 
-# 프론트엔드 (npm) 관련 제외
+# 1. npm 패키지 폴더 (절대 올리면 안 됨)
 node_modules/
+frontend/node_modules/
+
+# 2. 빌드 결과물 (배포 시 생성되는 파일)
+dist/
+dist-ssr/
+frontend/dist/
+
+# 3. 프론트엔드 환경변수 (API 키 등)
+.env
+.env.local
+*.local
+
+# 4. 로그 파일
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
 # 백엔드 (Python) 관련 제외
 __pycache__/
