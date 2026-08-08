@@ -2,7 +2,7 @@ from show import show_all_seats
 from cancel_seat import cancel_seat
 from Book import Book
 from add_seat import add_seat
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 
 # FastAPI 인스턴스 생성
 from pydantic import BaseModel
@@ -40,10 +40,24 @@ def create_seat(seat: SeatCreate):
     }
 
 @app.delete("/cancel/{seat_number}/")
-def cancel_seats(seat_number:str):
-    cancel_seat(seat_number)
-    return{
-        "status": "success"
-    }
+def cancel_seats(seat_number:str, response: Response):
+    result = cancel_seat(seat_number)
+    if result == 1:
+        return{
+            "status": "success"
+        }
+    elif result == 404:
+        response.status_code = 404
+        return{
+            "statuscode": 404,
+            "status": "fail"
+        }
+    elif result == 500:
+        response.status_code = 500
+        return{
+            "statuscode": 500,
+            "status": "fail"
+        }
+
 
 

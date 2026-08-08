@@ -5,9 +5,14 @@
 pip install -r requirements.txt
 
 실행시
-uvicorn fastapi_app:app --reload
+uvicorn backend.fastapi_app:app --reload
 
-fastapi 사용예시 -> fastapi_app.py참고
+fastapi 사용예시 -> backend.fastapi_app.py참고
+
+# main 실행시:
+
+    1. 터미널에서 cd backend 로 백엔드 이동
+    2. uvicorn main:app --reload 실행
 
 ## 사이트 접속:
 
