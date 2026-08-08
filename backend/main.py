@@ -51,24 +51,31 @@ def create_seat(seat: SeatCreate):
     }
 
 @app.delete("/cancel/{seat_number}/")
-def cancel_seats(seat_number:str, response: Response):
+def cancel_seats(seat_number: str, response: Response):
     result = cancel_seat(seat_number)
+
     if result == 1:
-        return{
+        response.status_code = 200
+        return {
             "status": "success"
-        }
+            }
     elif result == 404:
         response.status_code = 404
-        return{
-            "statuscode": 404,
-            "status": "fail"
-        }
-    elif result == 500:
+        return {"statuscode": 404, 
+                "status": "fail", 
+                "message": "좌석을 찾을 수 없습니다"
+                }
+    elif result == 400:
+        response.status_code = 400
+        return {"statuscode": 400, 
+                "status": "fail", 
+                "message": "예약되지 않은 좌석입니다"
+                }
+    else:  # 500
         response.status_code = 500
-        return{
-            "statuscode": 500,
-            "status": "fail"
-        }
+        return {"statuscode": 500, 
+                "status": "fail"
+                }
 
 
 
