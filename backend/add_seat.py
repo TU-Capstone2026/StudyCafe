@@ -28,4 +28,4 @@ def add_seat(seat_number):
             conn.close()
 
 if __name__ == "__main__":
-    add_seat('hello')
+    add_seat('A-101')
