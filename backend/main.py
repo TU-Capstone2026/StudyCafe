@@ -15,6 +15,14 @@ def read_root():
         "message":"스터디카페 예약 시스템 API 서버가 정상 작동 중입니다."
     }
 
+@app.get("/show")
+def get_seats():
+    seats = show_all_seats()
+    return {
+        "status": "success",
+        "seats": seats
+    }
+
 def main():
     print("스터디카페 예약 시스템을 시작합니다.")
     show_all_seats()
