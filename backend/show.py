@@ -1,30 +1,24 @@
 import mysql.connector
-from backend.db import get_connection
+from db import get_connection
 
 def show_all_seats():
     conn = None
     cursor = None
     try:
         conn = get_connection()
-        cursor = conn.cursor()
+        # dictionary=True로 설정하면 결과를 dict 형태로 받아올 수 있어서 API 응답에 유리함
+        cursor = conn.cursor(dictionary=True)
         
         # 1. 전체 좌석 목록 조회
         sql = "SELECT seat_id, seat_number, status FROM seats ORDER BY seat_id;"
         cursor.execute(sql)
         
         seats = cursor.fetchall()
-        
-        print("=== 전체 좌석 상태 목록 ===")
-        if not seats:
-            print("등록된 좌석이 없습니다.")
-            return
-        
-        # 2. 결과 출력
-        for seat_id, seat_number, status in seats:
-            print(f"[{seat_id}] 좌석 번호: {seat_number} | 상태: {status}")
+        return seats
 
     except mysql.connector.Error as e:
         print(f"DB 오류 발생: {e}")
+        return []
         
     finally:
         # 자원 해제
@@ -34,4 +28,4 @@ def show_all_seats():
             conn.close()
 
 if __name__ == "__main__":
-    show_all_seats()
+    print(show_all_seats())

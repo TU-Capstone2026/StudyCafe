@@ -1,5 +1,5 @@
 import mysql.connector
-from backend.db import get_connection
+from db import get_connection
 
 def add_seat(seat_number):
     conn = None
