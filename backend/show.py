@@ -1,5 +1,5 @@
 import mysql.connector
-from db import get_connection
+from backend.db import get_connection
 
 def show_all_seats():
     conn = None
