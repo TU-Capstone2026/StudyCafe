@@ -1,6 +1,19 @@
 from show import show_all_seats
 from Book import Book
 from add_seat import add_seat
+from fastapi import FastAPI
+
+app = FastAPI(
+    title="StudyCafe API",
+    description="스터디카페 예약 시스템 백엔드 API"
+)
+
+@app.get("/")
+def read_root():
+    return {
+        "status":"success",
+        "message":"스터디카페 예약 시스템 API 서버가 정상 작동 중입니다."
+    }
 
 def main():
     print("스터디카페 예약 시스템을 시작합니다.")
