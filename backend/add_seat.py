@@ -1,13 +1,5 @@
 import mysql.connector
-
-def get_connection():
-    return mysql.connector.connect(
-        host="0.tcp.jp.ngrok.io",   # 지금 켜둔 ngrok 주소
-        port=25818,                  # 지금 켜둔 ngrok 포트
-        user="root",
-        password="studycafe1234!",
-        database="studycafe"
-    )
+from db import get_connection
 
 def add_seat(seat_number):
     conn = None
@@ -36,4 +28,4 @@ def add_seat(seat_number):
             conn.close()
 
 if __name__ == "__main__":
-    add_seat('hello')
+    add_seat('A-101')
