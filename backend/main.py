@@ -2,10 +2,20 @@ from show import show_all_seats
 from Book import Book
 from add_seat import add_seat
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware # CORS 설정
 
 app = FastAPI(
     title="StudyCafe API",
     description="스터디카페 예약 시스템 백엔드 API"
+)
+
+# CORS 설정
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # 나중에 실제 주소로 변경 가능
+    allow_credentials = True,
+    allow_methods = ["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
