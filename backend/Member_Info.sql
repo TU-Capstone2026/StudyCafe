@@ -23,3 +23,4 @@ ALTER TABLE Member_Information
 MODIFY seat_id INT NULL;
 ALTER TABLE Member_Information
 MODIFY Member_Phone VARCHAR(20);
+

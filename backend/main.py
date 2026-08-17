@@ -142,3 +142,28 @@ def login(req: LoginRequest, response: Response):
         return {"status": "fail"}
 
 ##로그인 끝
+# 관리자 로그 조회 라우터
+@app.get("/admin/logs")
+def get_reservation_logs():
+    """reservation_logs 테이블의 모든 기록을 최신순으로 조회하여 반환"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        # 가장 최근에 생성된 로그가 맨 위로 오도록 내림차순 정렬
+        sql = "SELECT * FROM reservation_logs ORDER BY created_at DESC;"
+        cursor.execute(sql)
+        logs = cursor.fetchall()
+        
+        return {
+            "status": "success",
+            "logs": logs
+        }
+    except Exception as e:
+        return {
+            "status": "fail",
+            "message": str(e)
+        }
+    finally:
+        cursor.close()
+        conn.close()
