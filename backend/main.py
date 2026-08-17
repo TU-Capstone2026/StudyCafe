@@ -1,7 +1,6 @@
 from show import show_all_seats
 from cancel_seat import cancel_seat
-from Book import Book
-from add_seat import add_seat
+from reserve_seat import reserve_seat
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware # CORS 설정
 from fastapi import FastAPI, Response
@@ -9,6 +8,7 @@ from pydantic import BaseModel
 from reserve_seat import reserve_seat
 from member_auth import register_member, login_member
 from auth import decode_access_token
+from db import get_connection
 
 from fastapi import FastAPI, Response, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware # CORS 설정
@@ -140,7 +140,7 @@ class SeatBook(BaseModel):
 @app.post("/book")
 def reserve_seat(seat: SeatBook, response: Response):
     # 기존 Book.py의 함수/클래스 실행 (인자값은 Book.py 구조에 맞게 전달)
-    result = Book(seat.seat_number, seat.user_id)
+    result = reserve_seat(seat.seat_number, seat.user_id)
 
     if result == 1:
         response.status_code = 200
