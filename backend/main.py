@@ -1,7 +1,7 @@
 from show import show_all_seats
 from cancel_seat import cancel_seat
 from Book import Book
-from add_seat import add_seat
+from backend.reserve_seat import add_seat
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware # CORS 설정
 from fastapi import FastAPI, Response
@@ -77,5 +77,28 @@ def cancel_seats(seat_number: str, response: Response):
                 "status": "fail"
                 }
 
-
-
+# 관리자 로그 조회 라우터
+@app.get("/admin/logs")
+def get_reservation_logs():
+    """reservation_logs 테이블의 모든 기록을 최신순으로 조회하여 반환"""
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    
+    try:
+        # 가장 최근에 생성된 로그가 맨 위로 오도록 내림차순 정렬
+        sql = "SELECT * FROM reservation_logs ORDER BY created_at DESC;"
+        cursor.execute(sql)
+        logs = cursor.fetchall()
+        
+        return {
+            "status": "success",
+            "logs": logs
+        }
+    except Exception as e:
+        return {
+            "status": "fail",
+            "message": str(e)
+        }
+    finally:
+        cursor.close()
+        conn.close()

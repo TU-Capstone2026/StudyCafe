@@ -1,7 +1,7 @@
 from db import get_connection
 import mysql.connector
 
-def cancel_seat(seat_number):
+def cancel_seat(seat_number, member_id):
     conn = None
     cursor = None
     try:
@@ -23,6 +23,15 @@ def cancel_seat(seat_number):
             "UPDATE seats SET status = 'available' WHERE seat_number = %s",
             (seat_number,)
         )
+
+        # 관리자 로그 테이블에 취소 기록 남기기
+        log_sql = """
+            INSERT INTO reservation_logs (Member_ID, seat_number, action) 
+            VALUES (%s, %s, %s)
+        """
+        # 취소 동작이므로 세 번째 자리에 CANCEL을 입력합니다.
+        cursor.execute(log_sql, (member_id, seat_number, 'CANCEL'))
+
         conn.commit()
 
 
