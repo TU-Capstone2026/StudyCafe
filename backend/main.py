@@ -2,9 +2,10 @@ from show import show_all_seats
 from cancel_seat import cancel_seat
 from Book import Book
 from add_seat import add_seat
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware # CORS 설정
 from fastapi import FastAPI, Response
+from pydantic import BaseModel
 
 # FastAPI 인스턴스 생성
 from pydantic import BaseModel
@@ -78,4 +79,23 @@ def cancel_seats(seat_number: str, response: Response):
                 }
 
 
+# 1. 예약 요청시 전달받을 데이터 스키마 정의 (필요에 따라 user_id 등 추가)
+class SeatBook(BaseModel):
+    seat_number: str
+    user_id: str  # 사용자 식별 정보가 필요하다면 추가
 
+# 2. 좌석 예약 엔드포인트 추가
+@app.post("/book")
+def reserve_seat(seat: SeatBook, response: Response):
+    # 기존 Book.py의 함수/클래스 실행 (인자값은 Book.py 구조에 맞게 전달)
+    result = Book(seat.seat_number, seat.user_id)
+
+    if result == 1:
+        response.status_code = 200
+        return {"status": "success", "message": f"좌석 '{seat.seat_number}' 예약 성공!"}
+    elif result == 409:
+        response.status_code = 409
+        return {"status": "fail", "message": "이미 예약된 좌석입니다."}
+    else:
+        response.status_code = 500
+        return {"status": "fail", "message": "서버 오류가 발생했습니다."}
