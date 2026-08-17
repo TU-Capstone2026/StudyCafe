@@ -18,3 +18,10 @@ ADD COLUMN password_hash VARCHAR(255) NOT NULL;
 //로그인 이메일 칼럼 수정
 ALTER TABLE Member_Information
 MODIFY Member_Email VARCHAR(100);
+MODIFY Member_Email VARCHAR(100);
+//좌석 낫널 수정
+ALTER TABLE Member_Information
+MODIFY seat_id INT NULL;
+ALTER TABLE Member_Information
+MODIFY Member_Phone VARCHAR(20);
+
