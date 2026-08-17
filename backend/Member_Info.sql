@@ -11,3 +11,10 @@ CREATE TABLE Member_Information (
         FOREIGN KEY (seat_id)
         REFERENCES seats(seat_id)
 );
+//비번 칼럼 수정
+ALTER TABLE Member_Information
+ADD COLUMN password_hash VARCHAR(255) NOT NULL;
+
+//로그인 이메일 칼럼 수정
+ALTER TABLE Member_Information
+MODIFY Member_Email VARCHAR(100);
